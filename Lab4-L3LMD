@@ -1,0 +1,31 @@
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+public class Main {
+    public static void main(String[] args) {
+        String input = "Hello, World!"; // Chaîne à hacher
+
+        try {
+            // Créer un objet MessageDigest avec l'algorithme SHA-256
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+
+            // Calculer la fonction de hachage pour la chaîne d'entrée
+            byte[] hashedBytes = digest.digest(input.getBytes());
+
+            // Convertir le tableau de bytes en représentation hexadécimale
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hashedBytes) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+
+            // Afficher l'empreinte numérique
+            System.out.println("SHA-256 Hash : " + hexString.toString());
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println("L'algorithme de hachage n'est pas disponible : " + e.getMessage());
+        }
+    }
+}
